@@ -1,0 +1,9 @@
+run:
+  timeout: 2m
+
+linters:
+  enable:
+    - govet         # official Go static analysis
+    - staticcheck   # best third-party analyzer
+    - errcheck      # detects missing error checks
+    - unused        # unused vars/funcs/etc.
