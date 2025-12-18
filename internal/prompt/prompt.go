@@ -7,9 +7,11 @@ import (
 	"strings"
 
 	"github.com/MichaelRBond/go-db/internal/commands"
+	"github.com/MichaelRBond/go-db/internal/locations"
+	"github.com/MichaelRBond/go-db/internal/player"
 )
 
-func RunPrompt() error {
+func RunPrompt(player *player.Player, rooms *locations.RoomsById) error {
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -28,7 +30,7 @@ func RunPrompt() error {
 			continue
 		}
 
-		commandOutput, err := command.Execute(commands.ParsedCommand{
+		commandOutput, err := command.Execute(player, rooms, commands.ParsedCommand{
 			Arg:  strings.Join(args, " "),
 			Args: args,
 		})

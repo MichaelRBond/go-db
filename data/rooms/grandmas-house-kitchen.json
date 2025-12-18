@@ -1,0 +1,28 @@
+{
+  "id": "grandmas_kitchen",
+  "name": "Grandma's Kitchen",
+  "areaId": "grandmas_house",
+  "description": "You are standing in a large kitchen. A butcher block island dominates the middle of the room and is covered with fresh cookies, their smell lingering in the air.",
+  "exits": [
+    {
+      "direction": "down",
+      "roomId": "grandmas_cellar",
+      "type": "door",
+      "state": "closed",
+      "description": {
+        "open": "A wooden door leads down to the cellar.",
+        "closed": "A closed wooden door."
+      }
+    },
+    {
+      "direction": "south",
+      "roomId": "grandmas_living_room",
+      "type": "door",
+      "state": "closed",
+      "description": {
+        "open": "A wooden door leads into a living room.",
+        "closed": "A closed wooden door."
+      }
+    }
+  ]
+}

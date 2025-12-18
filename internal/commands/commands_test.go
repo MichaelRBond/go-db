@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/MichaelRBond/go-db/internal/player"
 )
 
 func TestCommandListInitialization(t *testing.T) {
@@ -31,7 +33,7 @@ func TestCommandListInitialization(t *testing.T) {
 
 func TestSayCommand(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		ret, err := Say.Execute(ParsedCommand{Args: []string{"hello", "world"}})
+		ret, err := Say.Execute(player.InitPlayer(), ParsedCommand{Args: []string{"hello", "world"}})
 
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
@@ -47,7 +49,7 @@ func TestSayCommand(t *testing.T) {
 	})
 
 	t.Run("error when missing args", func(t *testing.T) {
-		ret, err := Say.Execute(ParsedCommand{})
+		ret, err := Say.Execute(player.InitPlayer(), ParsedCommand{})
 
 		if err == nil {
 			t.Fatalf("expected error, got nil")
@@ -64,7 +66,7 @@ func TestSayCommand(t *testing.T) {
 }
 
 func TestExitCommand(t *testing.T) {
-	ret, err := Exit.Execute(ParsedCommand{})
+	ret, err := Exit.Execute(player.InitPlayer(), ParsedCommand{})
 
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -81,7 +83,7 @@ func TestExitCommand(t *testing.T) {
 
 func TestHelpCommandOutputsCommands(t *testing.T) {
 	output := captureOutput(t, func() {
-		ret, err := Help.Execute(ParsedCommand{})
+		ret, err := Help.Execute(player.InitPlayer(), ParsedCommand{})
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}

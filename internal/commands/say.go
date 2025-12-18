@@ -3,6 +3,9 @@ package commands
 import (
 	"fmt"
 	"strings"
+
+	"github.com/MichaelRBond/go-db/internal/locations"
+	"github.com/MichaelRBond/go-db/internal/player"
 )
 
 var Say = Command{
@@ -12,7 +15,7 @@ var Say = Command{
 	Execute:     sayFunction,
 }
 
-func sayFunction(cmd ParsedCommand) (CommandReturn, error) {
+func sayFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
 	var ret = CommandReturn{
 		Control: ControlNone,
 	}

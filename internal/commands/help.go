@@ -1,6 +1,11 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/MichaelRBond/go-db/internal/locations"
+	"github.com/MichaelRBond/go-db/internal/player"
+)
 
 var Help = Command{
 	Name:        "/help",
@@ -9,7 +14,7 @@ var Help = Command{
 	Execute:     helpFunction,
 }
 
-func helpFunction(cmd ParsedCommand) (CommandReturn, error) {
+func helpFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
 	fmt.Println("Available Commands:")
 	for name, command := range CommandList {
 		fmt.Printf("%s: %s\n", name, command.Description)

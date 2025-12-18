@@ -1,0 +1,28 @@
+{
+  "id": "grandmas_living_room",
+  "name": "Grandma's Living Room",
+  "areaId": "grandmas_house",
+  "description": "A living room. Vaguely uncomfortable looking furniture is arranged around the room.",
+  "exits": [
+    {
+      "direction": "down",
+      "roomId": "grandmas_cellar",
+      "type": "door",
+      "state": "closed",
+      "description": {
+        "open": "A wooden door leads down to the cellar.",
+        "closed": "A closed wooden door."
+      }
+    },
+    {
+      "direction": "north",
+      "roomId": "grandmas_kitchen",
+      "type": "door",
+      "state": "closed",
+      "description": {
+        "open": "A wooden door leads into the kitchen.",
+        "closed": "A closed wooden door."
+      }
+    }
+  ]
+}
