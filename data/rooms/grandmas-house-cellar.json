@@ -1,0 +1,18 @@
+{
+  "id": "grandmas_cellar",
+  "name": "Grandma's Cellar",
+  "areaId": "grandmas_house",
+  "description": "A dark cellar, lit by a single torch. The floor is dirt and the walls are damp",
+  "exits": [
+    {
+      "direction": "up",
+      "roomId": "grandmas_kitchen",
+      "type": "door",
+      "state": "closed",
+      "description": {
+        "open": "A wooden door, at the top of the stairs, leads into the kitchen.",
+        "closed": "A closed wooden door, at the top of the stairs."
+      }
+    }
+  ]
+}
