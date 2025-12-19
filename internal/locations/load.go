@@ -8,9 +8,14 @@ import (
 	"strings"
 )
 
+var RoomsDirectory = "data/rooms"
+
 type RoomsById map[string]*Room
 
-var RoomsDirectory = "data/rooms"
+func (rooms *RoomsById) GetRoomById(id string) (*Room, bool) {
+	room, exists := (*rooms)[id]
+	return room, exists
+}
 
 func LoadRooms() (*RoomsById, error) {
 	rooms := make(RoomsById)

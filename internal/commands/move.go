@@ -2,6 +2,7 @@ package commands
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/MichaelRBond/go-db/internal/locations"
 	"github.com/MichaelRBond/go-db/internal/player"
@@ -57,50 +58,48 @@ var MoveDown = Command{
 }
 
 func moveFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	room, roomExists := locations.GetRoomById(rooms, player.Location)
+	room, roomExists := rooms.GetRoomById(player.Location)
 	if !roomExists {
 		return CommandReturn{}, errors.New("current location not found")
 	}
 
-	exit, exitExits := locations.GetExit(room, cmd.Args[0])
+	exit, exitExits := room.GetExit(cmd.Args[0])
 	if !exitExits {
 		return CommandReturn{}, errors.New("invalid direction")
 	}
 
+	newRoom, newRoomExists := rooms.GetRoomById(exit.RoomID)
+	if !newRoomExists {
+		return CommandReturn{}, errors.New("destination room not found")
+	}
 	player.SetLocation(exit.RoomID)
 
 	ret := CommandReturn{
-		Message: "You move " + cmd.Args[0] + "." + "\n" + locations.DisplayRoom(rooms, player.Location),
+		Message: fmt.Sprintf("You move %s.\n%s", cmd.Args[0], newRoom.DisplayRoom()),
 	}
 	return ret, nil
 }
 
 func moveNorthFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"north"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"north"}})
 }
 
 func moveSouthFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"south"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"south"}})
 }
 
 func moveEastFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"east"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"east"}})
 }
 
 func moveWestFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"west"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"west"}})
 }
 
 func moveUpFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"up"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"up"}})
 }
 
 func moveDownFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	cmd.Args = []string{"down"}
-	return moveFunction(player, rooms, cmd)
+	return moveFunction(player, rooms, ParsedCommand{Args: []string{"down"}})
 }

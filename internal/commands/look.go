@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/MichaelRBond/go-db/internal/locations"
 	"github.com/MichaelRBond/go-db/internal/player"
 )
@@ -13,6 +15,11 @@ var Look = Command{
 }
 
 func lookFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedCommand) (CommandReturn, error) {
-	look := locations.DisplayRoom(rooms, player.Location)
+	room, exists := rooms.GetRoomById(player.Location)
+	if !exists {
+		return CommandReturn{}, errors.New("current room does not exist")
+	}
+
+	look := room.DisplayRoom()
 	return CommandReturn{Message: look}, nil
 }

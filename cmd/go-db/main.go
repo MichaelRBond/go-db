@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/MichaelRBond/go-db/internal/commands"
 	"github.com/MichaelRBond/go-db/internal/db"
 	"github.com/MichaelRBond/go-db/internal/locations"
 	"github.com/MichaelRBond/go-db/internal/player"
@@ -25,8 +26,8 @@ func main() {
 
 	player := player.InitPlayer()
 
-	initialRoom := locations.DisplayRoom(rooms, player.Location)
-	fmt.Printf("\n%s\n\n", initialRoom)
+	initialLookResult, _ := commands.Look.Execute(player, rooms, commands.ParsedCommand{})
+	fmt.Printf("\n%s\n\n", initialLookResult.Message)
 
 	if error := prompt.RunPrompt(player, rooms); error != nil {
 		fmt.Println("Error running UI:", error)
