@@ -25,7 +25,8 @@ func moveFunction(player *player.Player, rooms *locations.RoomsById, cmd ParsedC
 		return CommandReturn{}, errors.New("invalid direction")
 	}
 
-	player.Location = exit.RoomID
+	player.SetLocation(exit.RoomID)
+
 	ret := CommandReturn{
 		Message: "You move " + cmd.Args[0] + "." + "\n" + locations.DisplayRoom(rooms, player.Location),
 	}
