@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"os"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -114,8 +115,9 @@ func TestLookCommand(t *testing.T) {
 		t.Fatalf("expected room name in output, got %q", ret.Message)
 	}
 
-	if !strings.Contains(ret.Message, "Exits: [north]") {
-		t.Fatalf("expected exits list in output, got %q", ret.Message)
+	plainMessage := stripANSI(ret.Message)
+	if !strings.Contains(plainMessage, "Exits: [north]") {
+		t.Fatalf("expected exits list in output, got %q", plainMessage)
 	}
 }
 
@@ -194,6 +196,12 @@ func captureOutput(t *testing.T, fn func()) string {
 	}
 
 	return buf.String()
+}
+
+var ansiSequence = regexp.MustCompile(`\x1b\[[0-9;]*m`)
+
+func stripANSI(input string) string {
+	return ansiSequence.ReplaceAllString(input, "")
 }
 
 func buildRooms() *locations.RoomsById {
