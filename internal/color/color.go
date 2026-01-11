@@ -15,8 +15,5 @@ const (
 )
 
 func Wrap(text, colorCode string) string {
-	if colorCode == "" {
-		return text
-	}
 	return colorCode + text + Reset
 }
