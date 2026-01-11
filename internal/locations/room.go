@@ -3,6 +3,8 @@ package locations
 import (
 	"fmt"
 	"strings"
+
+	"github.com/MichaelRBond/go-db/internal/color"
 )
 
 type Room struct {
@@ -30,10 +32,13 @@ func (room *Room) GetExitSliceAsStrings() []string {
 }
 
 func (room *Room) DisplayRoom() string {
-	output := fmt.Sprintf("\n%s\n%s\n", room.Name, room.Description)
+	output := fmt.Sprintf("\n%s\n\n%s\n",
+		color.Wrap(room.Name, color.Yellow),
+		room.Description,
+	)
 	exits := room.GetExitSliceAsStrings()
 
-	output += fmt.Sprintf("Exits: [%s]\n", strings.Join(exits, ", "))
+	output += fmt.Sprintf("\n%s [%s]\n", color.Wrap("Exits:", color.Blue), strings.Join(exits, ", "))
 
 	return output
 }
